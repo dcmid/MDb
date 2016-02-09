@@ -10,7 +10,7 @@ public class Movie{
 	 * @return String
 	 */
 	public String getName(){
-		return null;
+		return name;
 	}
 	
 	/**
@@ -18,7 +18,7 @@ public class Movie{
 	 * @return String
 	 */
 	public String getYear(){
-		return null;
+		return year;
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class Movie{
 	 * @return ArrayList
 	 */
 	public ArrayList<String> getInfo(){
-		return null;
+		return info;
 	}
 	
 	/**
@@ -36,6 +36,9 @@ public class Movie{
 	 * @param info list of remaining
 	 */
 	public Movie(String name, String year, ArrayList<String> info){
+		this.name = name;
+		this.year = year;
+		this.info = info;
 		
 	}
 }
