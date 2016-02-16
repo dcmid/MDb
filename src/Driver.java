@@ -14,7 +14,8 @@ public class Driver{
  * The main method starts MDb, opening the user interface
  * @param args
  */
-	public static void Main(String args[]){
-		
+	public static void main(String args[]){
+		Database dbase = new Database(args[0]);
+		JOptionPane.showMessageDialog("WOOT");
 	}
 }

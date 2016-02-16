@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 public class DatabaseTests {
-	Database data = new Database("/testData/movies.odt");
+	Database data = new Database("StarTrekMovies.txt");
 	@Test
 	public void testFilterMovieList() {
-		ArrayList<Movie> movies = data.parseMovieList();
+		ArrayList<Movie> movies = data.movieList;
+		System.out.println(movies);
 		if(movies.size() == 0)
 			fail("No movie info parsed");
 		Movie movie1 = movies.get(0);

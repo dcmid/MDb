@@ -41,4 +41,8 @@ public class Movie{
 		this.info = info;
 		
 	}
+	
+	public String toString(){
+		return name;
+	}
 }
