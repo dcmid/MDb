@@ -16,6 +16,9 @@ public class Driver{
  */
 	public static void main(String args[]){
 		Database dbase = new Database(args[0]);
-		JOptionPane.showMessageDialog("WOOT");
+		Object[] options = { "JOptionPane", "JFrame" };
+		JOptionPane.showOptionDialog(null, "Which GUI would you like to use?", "Choose your GUI",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+				null, options, options[0]);
 	}
 }
