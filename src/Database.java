@@ -21,9 +21,9 @@ public class Database{
 			ArrayList<String> movieInfo = new ArrayList<String>();
 			int i;
 			//iterates through characters until '(' is encountered, adding to movieName
-			for(i = 0; str.charAt(i) != '(' && i < str.length(); i++){
+			for(i = 0; i < str.length() && !(str.charAt(i) == '(' && (str.charAt(i+1) == '?' || Character.isDigit(str.charAt(i+1)))); i++)
 				movieName += str.charAt(i);
-			}
+			
 			//finds all info, adding to movieInfo
 			for(char ch = str.charAt(i); Character.isWhitespace(ch) || ch == '(' || ch == ')'; i++){
 				ch = str.charAt(i);
@@ -37,7 +37,9 @@ public class Database{
 				}
 				ch = str.charAt(i);
 			}
+			
 			//finds movieYear
+			i--;
 			for(; i < str.length(); i++){
 				char ch = str.charAt(i);
 				movieYear += ch;
@@ -58,7 +60,7 @@ public class Database{
 		if(searchParam.equals(""))
 			return movieList;
 		for(Movie movie:movieList){
-			if(movie.getName().indexOf(searchParam) > -1 || movie.getYear().indexOf(searchParam) > -1)
+			if(movie.getName().toLowerCase().indexOf(searchParam.toLowerCase()) > -1 || movie.getYear().contains(searchParam))
 				filtered.add(movie);
 			else
 				for(String info:movie.getInfo())

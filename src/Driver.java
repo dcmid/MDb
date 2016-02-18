@@ -1,4 +1,6 @@
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
+import javax.swing.*;
 /**
  * <h1>Movie Database</h1>
  * Movie Database (MDb) converts a plaintext file of movie data into a title-searchable database.
@@ -8,17 +10,34 @@ import javax.swing.JOptionPane;
  * @since 2016-02-05
  */
 public class Driver{
-	private JOptionPane display;
 	
 /**
  * The main method starts MDb, opening the user interface
  * @param args
  */
 	public static void main(String args[]){
+		String searchParam;
+		ArrayList<Movie> filteredMovies;
+		String moviesString = "";
+		int guiSelection;
 		Database dbase = new Database(args[0]);
 		Object[] options = { "JOptionPane", "JFrame" };
-		JOptionPane.showOptionDialog(null, "Which GUI would you like to use?", "Choose your GUI",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+		guiSelection = JOptionPane.showOptionDialog(null, "Which GUI would you like to use?", "Choose your GUI",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
 				null, options, options[0]);
+		if(guiSelection == 0){
+			searchParam = JOptionPane.showInputDialog(null, "What yo search param, mah digger?");
+			filteredMovies = dbase.filterMovieList(searchParam);
+			moviesString = String.valueOf(filteredMovies.size()) + " Results:\n\n";
+			for(Movie m:filteredMovies)
+				moviesString += m.getName() + "--- " + m.getYear() + "\n";
+			JOptionPane.showMessageDialog(null, moviesString);
+		}
+		else{
+			MDbFrame frame = new MDbFrame();
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.pack();
+			frame.setVisible(true);
+		}
 	}
 }
