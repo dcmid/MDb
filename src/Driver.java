@@ -17,7 +17,7 @@ public class Driver{
  */
 	public static void main(String args[]){
 		String searchParam;
-		ArrayList<Movie> filteredMovies;
+		MovieList filteredMovies;
 		String moviesString = "";
 		int guiSelection;
 		Database dbase = new Database(args[0]);
@@ -34,9 +34,8 @@ public class Driver{
 			JOptionPane.showMessageDialog(null, moviesString);
 		}
 		else{
-			MDbFrame frame = new MDbFrame();
+			MDbFrame frame = new MDbFrame(dbase.filterMovieList(""));
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.pack();
 			frame.setVisible(true);
 		}
 	}

@@ -2,18 +2,18 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class Database{	
-	protected ArrayList<Movie> movieList;
+	protected MovieList movieList;
 	private BufferedReader fileReader;
 	
 	/**
 	 * Parses movie data file into ArrayList of Movie objects
 	 * @return ArrayList
 	 */
-	private ArrayList<Movie> parseMovieList(){	
+	private MovieList parseMovieList(){	
 		return parseMovieList(fileReader);
 	}
-	protected static ArrayList<Movie> parseMovieList(BufferedReader reader){
-		ArrayList<Movie> movies = new ArrayList<Movie>();
+	protected static MovieList parseMovieList(BufferedReader reader){
+		MovieList movies = new MovieList();
 		try{
 		for(String str = reader.readLine(); str != null; str = reader.readLine()){
 			String movieName = "";
@@ -55,8 +55,8 @@ public class Database{
 	 * @return ArrayList
 	 * @param searchParam Search Parameter from user
 	 */
-	public ArrayList<Movie> filterMovieList(String searchParam){
-		ArrayList<Movie> filtered = new ArrayList<Movie>();
+	public MovieList filterMovieList(String searchParam){
+		MovieList filtered = new MovieList();
 		if(searchParam.equals(""))
 			return movieList;
 		for(Movie movie:movieList){
