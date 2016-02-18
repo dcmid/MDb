@@ -86,7 +86,6 @@ public class MDbFrame extends JFrame {
 			else
 				displayArea.setText(dbase.filterMovieList(textField.getText(),0).toString());
 			displayArea.repaint();
-			
 		}
 
 		@Override

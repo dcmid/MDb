@@ -15,8 +15,8 @@ public class DatabaseTests {
 		Movie movie2 = movies.get(movies.size() - 1);
 		
 		assertEquals(data.filterMovieList("",0), movies);
-		assertEquals(data.filterMovieList(movie1.getName(),1).get(0), movie1);
-		assertEquals(data.filterMovieList(movie2.getName(),1).get(0), movie2);
+		assertTrue(data.filterMovieList(movie1.getName().toString(),1).contains(movie1));
+		assertTrue(data.filterMovieList(movie2.getYear().toString(),2).contains(movie2));
 	}
 
 }
