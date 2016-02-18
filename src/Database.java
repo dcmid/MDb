@@ -9,9 +9,6 @@ public class Database{
 	 * Parses movie data file into ArrayList of Movie objects
 	 * @return ArrayList
 	 */
-	private MovieList parseMovieList(){	
-		return parseMovieList(fileReader);
-	}
 	protected static MovieList parseMovieList(BufferedReader reader){
 		MovieList movies = new MovieList();
 		try{
@@ -54,15 +51,16 @@ public class Database{
 	 * Returns full list if empty parameter is given
 	 * @return ArrayList
 	 * @param searchParam Search Parameter from user
+	 * @param searchType 0 searches all fields, 1 searches name, 2 searches year
 	 */
-	public MovieList filterMovieList(String searchParam){
+	public MovieList filterMovieList(String searchParam, int searchType){
 		MovieList filtered = new MovieList();
 		if(searchParam.equals(""))
 			return movieList;
 		for(Movie movie:movieList){
-			if(movie.getName().toLowerCase().indexOf(searchParam.toLowerCase()) > -1 || movie.getYear().contains(searchParam))
+			if((movie.getName().toLowerCase().contains(searchParam.toLowerCase()) && searchType != 2) || (movie.getYear().contains(searchParam)) && searchType != 1)
 				filtered.add(movie);
-			else
+			else if(searchType == 0)
 				for(String info:movie.getInfo())
 					if(movie.getName().indexOf(info) > -1){
 						filtered.add(movie);

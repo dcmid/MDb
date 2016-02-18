@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import javax.swing.*;
 /**
  * <h1>Movie Database</h1>
@@ -22,19 +20,19 @@ public class Driver{
 		int guiSelection;
 		Database dbase = new Database(args[0]);
 		Object[] options = { "JOptionPane", "JFrame" };
-		guiSelection = JOptionPane.showOptionDialog(null, "Which GUI would you like to use?", "Choose your GUI",
+		guiSelection = JOptionPane.showOptionDialog(null, "Which GUI would you like to use?\n(JFrame has advanced features)", "Choose your GUI",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
 				null, options, options[0]);
 		if(guiSelection == 0){
-			searchParam = JOptionPane.showInputDialog(null, "What yo search param, mah digger?");
-			filteredMovies = dbase.filterMovieList(searchParam);
+			searchParam = JOptionPane.showInputDialog(null, "Enter Search Parameter.");
+			filteredMovies = dbase.filterMovieList(searchParam,0);
 			moviesString = String.valueOf(filteredMovies.size()) + " Results:\n\n";
 			for(Movie m:filteredMovies)
 				moviesString += m.getName() + "--- " + m.getYear() + "\n";
 			JOptionPane.showMessageDialog(null, moviesString);
 		}
 		else{
-			MDbFrame frame = new MDbFrame(dbase.filterMovieList(""));
+			MDbFrame frame = new MDbFrame(dbase);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 		}

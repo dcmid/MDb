@@ -1,13 +1,7 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class MDbFrame extends JFrame {
 
@@ -15,95 +9,88 @@ public class MDbFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected JPanel contentPane;
-	protected JTextField textField;
-	protected ButtonGroup searchType = new ButtonGroup();
-	JTextArea displayArea;
-	JScrollPane scroll;
+	private JPanel contentPane = new JPanel();
+	private JTextField textField;
+	private ButtonGroup searchType = new ButtonGroup();
+	private JRadioButton rdbtnTitle = new JRadioButton("Title");
+	private JRadioButton rdbtnReleaseYear = new JRadioButton("Release Year");
+	private JRadioButton rdbtnKeyword = new JRadioButton("Keyword");
+	private JTextArea displayArea;
+	private JScrollPane scroll;
+	private Database dbase;
+	private MovieList movies;
 
 	/**
 	 * Create the frame.
 	 */
-	public MDbFrame(MovieList movies) {
+	public MDbFrame (Database dbase) {
+		movies = dbase.movieList;
+		MyHandler listener = new MyHandler();
+		this.dbase = dbase;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
+		setBounds(100, 100, 649, 432);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{50, 366, 0};
-		gbl_contentPane.rowHeights = new int[]{14, 23, 20, 145, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		contentPane.setLayout(null);
 		
-		JLabel lblSelectSearchType = new JLabel("Select search type and enter parameter below.");
-		GridBagConstraints gbc_lblSelectSearchType = new GridBagConstraints();
-		gbc_lblSelectSearchType.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblSelectSearchType.insets = new Insets(0, 0, 5, 0);
-		gbc_lblSelectSearchType.gridwidth = 2;
-		gbc_lblSelectSearchType.gridx = 0;
-		gbc_lblSelectSearchType.gridy = 0;
-		contentPane.add(lblSelectSearchType, gbc_lblSelectSearchType);
+		JLabel lblSelectSearchType = new JLabel("Select search type and enter parameter below. Keyword searches all info on movies.");
+		lblSelectSearchType.setBounds(5, 5, 569, 14);
+		contentPane.add(lblSelectSearchType);
 		
-		JRadioButton rdbtnTitle = new JRadioButton("Title");
+		
+		searchType.add(rdbtnKeyword);
+		rdbtnKeyword.setBounds(5, 24, 98, 23);
+		contentPane.add(rdbtnKeyword);
+		
+		
 		searchType.add(rdbtnTitle);
-		GridBagConstraints gbc_rdbtnTitle = new GridBagConstraints();
-		gbc_rdbtnTitle.anchor = GridBagConstraints.NORTH;
-		gbc_rdbtnTitle.fill = GridBagConstraints.HORIZONTAL;
-		gbc_rdbtnTitle.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnTitle.gridx = 0;
-		gbc_rdbtnTitle.gridy = 1;
-		contentPane.add(rdbtnTitle, gbc_rdbtnTitle);
+		rdbtnTitle.setBounds(105, 24, 79, 23);
+		contentPane.add(rdbtnTitle);
 		
-		JRadioButton rdbtnReleaseYear = new JRadioButton("Release Year");
 		searchType.add(rdbtnReleaseYear);
-		GridBagConstraints gbc_rdbtnReleaseYear = new GridBagConstraints();
-		gbc_rdbtnReleaseYear.anchor = GridBagConstraints.NORTHWEST;
-		gbc_rdbtnReleaseYear.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnReleaseYear.gridx = 1;
-		gbc_rdbtnReleaseYear.gridy = 1;
-		contentPane.add(rdbtnReleaseYear, gbc_rdbtnReleaseYear);
+		rdbtnReleaseYear.setBounds(186, 24, 113, 23);
+		contentPane.add(rdbtnReleaseYear);
 		
 		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.anchor = GridBagConstraints.NORTH;
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.gridwidth = 2;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 2;
-		contentPane.add(textField, gbc_textField);
+		textField.setBounds(5, 52, 618, 20);
+		contentPane.add(textField);
 		textField.setColumns(10);
+		textField.addKeyListener(listener);
 		
 		displayArea = new JTextArea(movies.toString());
 		displayArea.setEditable(false);
 		displayArea.setBounds(10, 105, 398, 145);
+		displayArea.setSelectionStart(0);
+		displayArea.setSelectionEnd(0);
 		scroll = new JScrollPane (displayArea);
+		scroll.setBounds(5, 77, 618, 305);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		GridBagConstraints gbc_scroll = new GridBagConstraints();
-		gbc_scroll.fill = GridBagConstraints.BOTH;
-		gbc_scroll.gridwidth = 2;
-		gbc_scroll.gridx = 0;
-		gbc_scroll.gridy = 3;
-		contentPane.add(scroll, gbc_scroll);;
+		contentPane.add(scroll);
+		this.setTitle("Movie Database");
+		searchType.setSelected(rdbtnKeyword.getModel(), true);
 	}
 	
-	private void updateTextArea(String str){
+
+	private class MyHandler implements KeyListener{
 		
-	}
-	
+		@Override
+		public void keyPressed(KeyEvent event){
+		}
 
-	//This is what happens when the Action Listener is tripped by an event (pressing enter)
-	private class MyHandler implements ActionListener{
-		public void actionPerformed(ActionEvent event){
+		@Override
+		public void keyReleased(KeyEvent event) {
+			if(rdbtnTitle.isSelected())
+				displayArea.setText(dbase.filterMovieList(textField.getText(),1).toString());
+			else if(rdbtnReleaseYear.isSelected())
+				displayArea.setText(dbase.filterMovieList(textField.getText(),2).toString());
+			else
+				displayArea.setText(dbase.filterMovieList(textField.getText(),0).toString());
+			displayArea.repaint();
+			
+		}
 
-			//If enter is pressed from in the text box, signIn is run with the text from the box
-			if((event.getSource() == textField)){
-				
-			}
-			else{
-			}
+		@Override
+		public void keyTyped(KeyEvent event) {
 		}
 	}
 }
