@@ -26,7 +26,7 @@ public class Database{
 				ch = str.charAt(i);
 				String info = "";
 				if(ch == '('){
-					for(; ch != ')'; i++){
+					for(; ch != ')'; i++){  
 						ch = str.charAt(i);
 						info += ch;
 					}
