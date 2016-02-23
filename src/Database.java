@@ -14,7 +14,7 @@ public class Database{
 		try{
 		for(String str = reader.readLine(); str != null; str = reader.readLine()){
 			String movieName = "";
-			String movieYear = "";
+			String movieYear = ""; 
 			ArrayList<String> movieInfo = new ArrayList<String>();
 			int i;
 			//iterates through characters until '(' is encountered, adding to movieName
