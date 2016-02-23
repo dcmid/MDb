@@ -5,6 +5,14 @@ import org.junit.Test;
 
 public class DatabaseTests {
 	Database data = new Database("StarTrekMovies.txt");
+	
+	@Test
+	public void testParseMovieList() {
+		//This list is found using parseMovieList
+		ArrayList<Movie> movies = data.movieList;
+		assertTrue(movies.size()>0);
+	}
+	
 	@Test
 	public void testFilterMovieList() {
 		ArrayList<Movie> movies = data.movieList;
